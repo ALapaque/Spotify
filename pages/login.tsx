@@ -8,13 +8,12 @@ const Login = ({ providers }: any) => {
            alt="Spotify logo" />
 
       { Object.values(providers).map((provider: any) => (
-        <button className="bg-[#18D860] text-white p-5 rounded-full"
+        <button className="bg-[#18D860] text-white px-5 py-2 rounded-full"
                 key={ provider.name }
                 onClick={ () => signIn(provider.id, { callbackUrl: '/' }) }>
           Login with { provider.name }
         </button>
       )) }
-
     </div>
   );
 };

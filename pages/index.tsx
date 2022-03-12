@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import Center from '../components/Center';
 import Sidebar from '../components/Sidebar';
 
 const Home: NextPage = () => {
@@ -12,9 +13,9 @@ const Home: NextPage = () => {
       </Head>
 
       <div className="bg-black h-screen overflow-hidden">
-        <main className="">
+        <main className="flex">
           <Sidebar />
-          {/*  CENTER   */ }
+          <Center />
         </main>
 
         <div>
