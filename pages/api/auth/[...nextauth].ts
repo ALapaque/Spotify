@@ -53,7 +53,13 @@ export default NextAuth({
       } else { // token expired then needs to refresh it
         return await refreshAccessToken(token);
       }
-    }
+    },
+    async session({session, token}) {
+      (session.user as any).accessToken = token.accessToken;
+      (session.user as any).refreshToken = token.refreshToken;
+      (session.user as any).username = token.username;
 
+      return session;
+    }
   }
 });
