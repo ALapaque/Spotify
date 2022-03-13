@@ -46,7 +46,7 @@ const Center = () => {
   }
 
   return (
-    <div className="flex-grow overflow-y-hidden">
+    <div className="flex-grow h-screen overflow-y-scroll scrollbar-hide">
       <header className="absolute top-5 right-8">
         <div className="flex items-center bg-black text-white space-x-3 opacity-90 hover:opacity-80 cursor-pointer rounded-full p-1 pr-2"
              onClick={ () => signOut() }>
@@ -70,7 +70,7 @@ const Center = () => {
         </div>
       </section>
 
-      <div className="h-screen overflow-y-scroll scrollbar-hide">
+      <div className="">
         <Songs />
       </div>
     </div>
