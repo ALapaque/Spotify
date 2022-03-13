@@ -2,6 +2,8 @@ import { ChevronDownIcon } from '@heroicons/react/outline';
 import { shuffle } from 'lodash';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { playlistIdState } from '../atoms/playlistAtom';
 
 const colors = [
   "from-indigo-500",
@@ -13,12 +15,24 @@ const colors = [
   "from-purple-500"
 ];
 
+const hueRotate = [
+  'hue-rotate-0',
+  'hue-rotate-15',
+  'hue-rotate-30',
+  'hue-rotate-60',
+  'hue-rotate-90',
+  'hue-rotate-180'
+]
+
 const Center = () => {
   const { data: session } = useSession();
   const [color, setColor] = useState<string | null>(null);
+  const [hue, setHue] = useState<string | null>(null);
+  const [ playlistId, setPlaylistId ] = useRecoilState(playlistIdState);
 
   useEffect(() => {
     setColor(shuffle(colors).pop() as string);
+    setHue(shuffle(hueRotate).pop() as string);
   }, []);
 
   if (!session?.user?.image || !session.user.name) {
@@ -37,7 +51,7 @@ const Center = () => {
         </div>
       </header>
 
-      <section className={`flex items-center space-x-7 bg-gradient-to-b to-black ${color} h-80 padding-8`}>
+      <section className={`flex items-center space-x-7 bg-gradient-to-b ${color} to-black ${hue}  h-80 padding-8`}>
         <h1>hello</h1>
       </section>
     </div>
