@@ -20,7 +20,7 @@ const Song = (props: Props) => {
   };
 
   return (
-    <div className="grid grid-cols-3 text-gray-500 py-4 px-5 hover:bg-gray-900 cursor-pointer rounded-lg"
+    <div className="grid grid-cols-2 text-gray-500 py-4 px-5 hover:bg-gray-900 cursor-pointer rounded-lg"
     onClick={playsong}>
       <div className="flex items-center space-x-4">
         <p>{ props.order + 1 }</p>
