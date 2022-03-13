@@ -9,3 +9,8 @@ export const isPLayingState = atom({
   key: 'isPlayingState',
   default: false
 });
+
+export const isMuteState = atom({
+  key: 'isMuteState',
+  default: false
+});
