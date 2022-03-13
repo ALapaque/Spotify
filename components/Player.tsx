@@ -8,11 +8,11 @@ import {
   VolumeOffIcon as VolumeOffSolidIcon,
   VolumeUpIcon,
 } from '@heroicons/react/solid'
-import { VolumeOffIcon as VolumeOffOutlineIcon } from '@heroicons/react/outline'
 import { debounce } from 'lodash'
 import { useSession } from 'next-auth/react'
 import { useCallback, useEffect, useState } from 'react'
-import { useRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { playlistState } from '../atoms/playlistAtom'
 import {
   currentTrackIdState,
   isMuteState,
@@ -23,10 +23,11 @@ import useSpotify from '../hooks/useSpotify'
 
 const Player = () => {
   const spotifyApi = useSpotify()
-  const { data: session, status } = useSession()
+  const { data: session } = useSession()
   const [currentTrackId, setCurrentTrackId] =
     useRecoilState(currentTrackIdState)
   const [isPlaying, setIsPlaying] = useRecoilState(isPLayingState)
+  const playlist = useRecoilValue<any>(playlistState)
   const [isMute, setIsMute] = useRecoilState(isMuteState)
   const [volume, setVolume] = useState<number>(50)
 
@@ -37,7 +38,6 @@ const Player = () => {
         setCurrentTrackId(data.body?.item?.id)
 
         spotifyApi.getMyCurrentPlaybackState().then((data: any) => {
-          console.log('playbackstate', data.body)
           setIsPlaying(data.body?.is_playing)
         })
       })
@@ -53,12 +53,6 @@ const Player = () => {
         setIsPlaying(true)
       }
     })
-  }
-  const handleNext = async () => {
-    await spotifyApi.skipToNext()
-  }
-  const handlePrevious = async () => {
-    await spotifyApi.skipToPrevious()
   }
   const handleMute = () => {
     if (isMute) {
@@ -98,6 +92,8 @@ const Player = () => {
   const PlayPauseButton = isPlaying ? PauseIcon : PlayIcon
   const VolumeDownMuteButton = isMute ? VolumeOffSolidIcon : VolumeUpIcon
 
+  console.log('playlist :: ', playlist)
+
   return (
     <div className="grid h-24 grid-cols-3 bg-gradient-to-b from-black to-gray-900 px-2 text-xs text-white md:px-8 md:text-base">
       {/* LEFT */}
@@ -116,14 +112,14 @@ const Player = () => {
       {/* CENTER */}
       <div className="flex items-center justify-evenly">
         <SwitchHorizontalIcon className="button" />
-        <RewindIcon onClick={handlePrevious} className="button" />
+        <RewindIcon className="button" />
 
         <PlayPauseButton
           onClick={handlePlayPause}
           className="button h-10 w-10"
         />
 
-        <FastForwardIcon onClick={handleNext} className="button" />
+        <FastForwardIcon className="button" />
         <ReplyIcon className="button" />
       </div>
 
